@@ -16,3 +16,9 @@
 p {
   text-align: center;
 }
+.counter2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

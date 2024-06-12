@@ -1,5 +1,5 @@
-import date from "date-and-time";
 import { useState } from "react";
+import RangeSlider from "react-range-slider-input";
 const dateProvider = (counter) => {
   const todayString = new Date().toLocaleDateString("en-us", {
     weekday: "short",
@@ -30,16 +30,8 @@ function App() {
       return c - step;
     });
   };
-  const handlePlusStep = () => {
-    setStep((s) => {
-      return s + 1;
-    });
-  };
-  const handleMinusStep = () => {
-    setStep((s) => {
-      return s - 1;
-    });
-  };
+
+  console.log(step);
 
   const provideDateString = () => {
     if (count === 0) {
@@ -54,19 +46,42 @@ function App() {
   return (
     <div>
       <div className="counter">
-        <button onClick={handleMinusStep}>-</button>
-        <p>Step: {step} </p>
-        <button onClick={handlePlusStep}>+</button>
+        <input
+          type="range"
+          value={step}
+          max={10}
+          min={1}
+          onChange={(s) => setStep(Number(s.target.value))}
+        />
       </div>
       <div className="counter">
         <button onClick={handleMinusCount}>-</button>
-        <p>Count: {count} </p>
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => setCount(e.target.value)}
+        />
         <button onClick={handlePlusCount}>+</button>
       </div>
 
-      <p>
-        {provideDateString()} {dateProvider(count)}
-      </p>
+      <div className="counter2">
+        <p>
+          {provideDateString()} {dateProvider(count)}
+        </p>
+        {count !== 0 || step !== 1 ? (
+          <button
+            style={{ width: "80px", height: "20px" }}
+            onClick={() => {
+              setCount(0);
+              setStep(1);
+            }}
+          >
+            Reset
+          </button>
+        ) : (
+          ""
+        )}{" "}
+      </div>
     </div>
   );
 }
